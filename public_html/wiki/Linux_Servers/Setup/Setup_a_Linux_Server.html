@@ -1,0 +1,97 @@
+<br>
+<div class="h">Setup a Linux Server</div><br>
+<div class="hh">Install Debian</div><br>
+<div class="hhh">Prepare USB</div><br>
+<em>Install Debian 11 as an ISO file and write it to a USB stick.</em><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&#8226; Download <a href="https://www.debian.org/distrib/netinst">Debian</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&#8226; Install <a href="https://rufus.ie/en/">Rufus</a><br>
+<br>
+<div class="hhh">Install from USB</div><br>
+&nbsp;&nbsp;&nbsp;&nbsp;1. Boot the system and select the USB<br>
+&nbsp;&nbsp;&nbsp;&nbsp;2. Create two partitions, one with mount point root '/' ext4, one swap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;3. Write to disk and start installation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;4. Check with spacebar to install ssh server<br>
+<hr>
+<br>
+<div class="hh">System Preferences</div><br>
+<div class="hhh">Sudo</div><br>
+<br>
+Add user to sudoers. First switch to root user:<br>
+<div class="code_block">
+su root<br>
+</div>
+Then add user to sudoers<br>
+<div class="code_block">
+sudo usermod -aG sudo woflje<br>
+</div>
+Then open a config to remove the password requirement for sudo:<br>
+<div class="code_block">
+sudo visudo<br>
+</div>
+Add the line <span class="inline_code">woflje ALL=(ALL:ALL) NOPASSWD:ALL</span><br>
+<br>
+<div class="hhh">Text Mode</div><br>
+Make the system boot in textmode:<br>
+<div class="code_block">
+sudo systemctl set-default multi-user.target<br>
+</div>
+<div class="hhh">SSH</div><br>
+Add the public key from a USB drive:<br>
+<div class="code_block">
+sudo mkdir /media/usbstickname<br>
+lsblk<br>
+sudo mount /dev/sda1 /media/usbstickname<br>
+sudo cp /media/usbstickname/authorized_keys /home/woflje/.ssh/authorized_keys<br>
+</div>
+Remove the option to use password to ssh into the server:<br>
+<div class="code_block">
+sudo nano /etc/ssh/sshd_config<br>
+</div>
+Change the following to:<br>
+<span class="inline_code">ChallengeResponseAuthentication no</span><br>
+<span class="inline_code">PasswordAuthentication no</span><br>
+<span class="inline_code">UsePAM no</span><br>
+<span class="inline_code">PermitRootLogin no</span><br>
+<br>
+<div class="hhh">WakeOnLAN</div><br>
+Install wakeonlan<br>
+<div class="code_block">
+sudo apt install wakeonlan<br>
+</div>
+Find the mac address<br>
+<div class="code_block">
+ip a<br>
+</div>
+Then from another system use<br>
+<div class="code_block">
+wakeonlan -i <ip> <mac><br>
+</div>
+<br>
+<div class="hhh">Reboot into windows</div><br>
+<em>Make sure to have chrome remote desktop enabled</em><br>
+Edit a file<br>
+<div class="code_block">
+sudo vim /etc/default/grub<br>
+</div>
+Replace <span class="inline_code">GRUB_DEFAULT=saved</span><br>
+Create a bashfile<br>
+<div class="code_block">
+vim reboot_to_windows.sh<br>
+</div>
+And in there write<br>
+<div class="code_block">
+sudo grub-reboot "$(grep -i windows /boot/grub/grub.cfg|cut -d"'" -f2)" && sudo reboot<br>
+</div>
+Then do<br>
+<div class="code_block">
+chmod +x reboot_to_windows.sh<br>
+</div>
+After, you can use<br>
+<div class="code_block">
+./reboot_to_windows.sh<br>
+</div>
+To reboot into windows<br>
+<br>
+<br>
+<br>
+<br>

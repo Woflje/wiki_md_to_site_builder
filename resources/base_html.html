@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>Wiki</title>
+        <script src="../wiki_resources/js/plugins/jquery.js"></script>
+        <link type="text/css" rel="stylesheet" href="../wiki_resources/main.css">
+    </head>
+    <body>
+        <div class = "page_container" id="page_container">
+            <div class="nav_container">
+                <div class="nav" id="nav">
+                wolfs_md_to_html_nav_placeholder
+                </div>
+            </div>
+            <div class="reader_container">
+                <div class="reader" id="reader">
+                </div>
+            </div>
+        </div>
+        <div id="nav_toggle" onclick="toggle_nav_bar()">&#60;</div>
+        <script>
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            var wiki_chapter = urlParams.get('c');
+            if(wiki_chapter==null){
+                wiki_chapter = wolfs_md_to_html_open_with_file_placeholder;
+            }
+            var current_wiki_chapter = wiki_chapter;
+    
+            var newURL = $(location).attr('href');
+            var nextTitle = $(document).attr('title');
+            const nextState = { additionalInformation: 'Updated the URL with JS' };
+    
+            const current_folder = wiki_chapter.split('\\');
+    
+            var sf = current_folder[0];
+            $('#folder_name_'+sf).css("max-height", "500px");
+            for (let i = 1; i<current_folder.length-1; i++){
+                sf += '__'+current_folder[i];
+                $('#folder_name_'+sf).css("max-height", "500px");
+            }
+            if(current_folder.length>1){
+                sf += '__'+current_folder[current_folder.length-1];
+            }else{
+                sf = current_folder[0];
+            }
+    
+            $('#'+sf).css("background-color","#260c21");
+
+            $('#reader').load(wiki_chapter+'.html');
+    
+            function toggle_nav_bar(){
+                if($('#page_container').css("margin-left") != "-400px"){
+                    $('#page_container').css("margin-left", "-400px");
+                    $('#nav_toggle').css("margin-left", "0px");
+                    $('#nav_toggle').css("border-radius", "0px 8px 8px 0px");
+                    $('#nav_toggle').html(">")
+                    $('#reader').css("transition", "0.2s");
+                    $('#reader').css("margin-left", "50px");
+                }else{
+                    $('#page_container').css("margin-left", "0px");
+                    $('#nav_toggle').css("margin-left", "385px");
+                    $('#nav_toggle').css("border-radius", "8px 0px 0px 8px");
+                    $('#nav_toggle').html("<")
+                    $('#reader').css("transition", "0.2s");
+                    $('#reader').css("margin-left", "20px");
+                }
+            }
+            function load_wiki_chapter($chapter){
+                $('#reader').css("transition", "0s");
+                $('#reader').fadeOut(200, function(){
+                    $('#reader').load($chapter, function(){
+                        $('#reader').fadeIn();
+                    });
+                });
+                $('#'+sf).css("background-color","#0e0e0e");
+                current_wiki_chapter = $chapter.replace('.html','');
+                sf = current_wiki_chapter.replace(/\\/g,'__');
+                $('#'+sf).css("background-color","#260c21");
+                newURL = $(location).attr('href').split('?').slice(0,-1).join('?')+'?c='+current_wiki_chapter;
+                newTitle = current_wiki_chapter.split('\\').slice(0,-1).join('\\');
+                window.history.pushState(nextState, newTitle, newURL);
+                document.title = newTitle;
+            }
+            function toggle_nav_folder($folder){
+                fc = $('#'+$folder)
+                if(fc.css("max-height") == "0px"){
+                    fc.css("transition", "0.5s ease-in")
+                    fc.css("max-height", "500px");
+                }else{
+                    fc.css("transition", "0.5s ease-out")
+                    fc.css("max-height", "0px");
+                }
+            }
+        </script>
+    </body>
+</html>

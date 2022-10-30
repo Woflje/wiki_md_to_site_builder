@@ -1,0 +1,139 @@
+@import url(../wiki_resources/montserrat.css);
+body,html{
+    margin: 0;
+    background-color:#242424;
+    overflow: hidden;
+}
+table {
+    border-collapse: collapse;
+}
+thead {
+    border-bottom: 1px solid #ebebeb;
+    font-weight: bold;
+}
+tr {
+    font-family: "Montserrat", Verdana, sans-serif;
+    color:#ebebeb;
+}
+td {
+    padding: 10px;
+}
+.page_container{
+    display: grid;
+    grid-template-columns: 400px auto;
+    overflow: hidden;
+    height: 100%;
+    transition: 0.2s;
+}
+.nav_container{
+    background-color:#3d3d3d;
+}
+.nav{
+    background-color: #242424;
+    margin:auto;
+    width: 380px;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    position: relative;
+    height:auto;
+    border-radius: 5px;
+    padding: 20px 0px 20px 0px;
+    margin-top: 30px;
+}
+.nav_button{
+    background-color:#0e0e0e;
+    margin: 10px;
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: "Montserrat", Verdana, sans-serif;
+    color:#ebebeb;
+    user-select: none;
+}
+.nav_folder_container{
+    max-height: 0px;
+    transition: 1s;
+    overflow: hidden;
+}
+.nav_button:hover{
+    background-color: #1b1b1b;
+}
+.nav_folder{
+    background-color:rgb(81, 71, 57);
+}
+.reader_container{
+    position: relative;
+    overflow: auto;
+    height: 100%;
+}
+.reader{
+    font-family: "Montserrat", Verdana, sans-serif;
+    color:#ebebeb;
+    margin: 20px;
+    line-height: 150%;
+    min-width: 600px;
+    transition: 0.2s;
+}
+.code_block{
+    font-family: monospace;
+    color: #fdffe1;
+    background-color:#0e0e0e;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+}
+.inline_code{
+    font-family: monospace;
+    color: #fdffe1;
+}
+.h{
+    font-size: 50px;
+}
+.hh{
+    font-size: 40px;
+}
+.hhh{
+    font-size: 30px;
+}
+a {
+    text-decoration: none;
+    color: rgb(107, 176, 255);
+    transition: 0.2s;
+}
+a:hover {
+    color: rgb(158, 203, 255);
+}
+#nav_toggle{
+    position:absolute;
+    float:left;
+    top:0;
+    bottom:0;
+    margin-left:385px;
+    margin-top:auto;
+    margin-bottom:auto;
+    background-color:rgb(177, 177, 177);
+    transition: 0.2s;
+    width: 15px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-family: "Montserrat", Verdana, sans-serif;
+    border-radius: 8px 0px 0px 8px;
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+}
+#nav_toggle:hover{
+    background-color:rgb(207, 207, 207);
+}
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+::-webkit-scrollbar-thumb {
+background-color: #444444;
+}
